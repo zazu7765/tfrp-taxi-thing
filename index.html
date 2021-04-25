@@ -1,0 +1,84 @@
+<html>
+<head><title>Chambers Transportation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</head>
+<h1 class="text-center">Chambers Transportation</h1><br>
+<span class="text-center">
+<label for="pickup">Pickup</label>
+<input id="pickup"/>
+<label for="deposit">Destination</label>
+<input id="deposit"/>
+<label for="fare">Fare</label>
+<input id="fare" type="number"/>
+<button onclick="add()" class="btn btn-success">Add</button>
+    <button onclick="addAd()" class="btn btn-info">Ad</button>
+</span>
+<br><br>
+<span>Currently earn a total of <span id="total">0</span> with a total of commision of <span id="commission" >0</span></span><br><br>
+<table class="table table-success">
+    <thead>
+    <tr>
+        <td>Pickup</td>
+        <td>Destination</td>
+        <td>Fare</td>
+        <td>Commission</td>
+    </tr>
+    </thead>
+    <tbody id="table">
+
+    </tbody>
+</table>
+<script>
+    var total = 0;
+    var commision = 0;
+
+    function add() {
+        let fare = parseFloat(document.getElementById('fare').value);
+        total += fare;
+        commision += (fare / 5) ;
+        update();
+        addInTable();
+    }
+
+    function update() {
+        document.getElementById('total').innerText = total;
+        document.getElementById('commission').innerText = commision;
+    }
+
+    function addInTable() {
+        let pickup = document.getElementById('pickup').value;
+        let deposit = document.getElementById('deposit').value;
+        let fare = parseFloat(document.getElementById('fare').value);
+        let commission = fare / 5;
+        let tr = document.createElement('tr');
+        tr.className = 'table table-success';
+        setValueBetweenTd(pickup, tr);
+        setValueBetweenTd(deposit, tr);
+        setValueBetweenTd(fare, tr);
+        setValueBetweenTd(commission, tr);
+        document.getElementById('table').appendChild(tr);
+
+    }
+
+    function setValueBetweenTd(value, destination) {
+        console.log(value);
+        let td = document.createElement('td');
+        td.innerText = value;
+        destination.appendChild(td);
+    }
+
+    function addAd() {
+        let tr = document.createElement('tr');
+        tr.className = 'table table-warning';
+        setValueBetweenTd('Posted ad', tr);
+        setValueBetweenTd('', tr);
+        setValueBetweenTd('0', tr);
+        setValueBetweenTd('-10', tr);
+        commision -= 10;
+        update();
+        document.getElementById('table').appendChild(tr);
+
+    }
+</script>
+</html>
